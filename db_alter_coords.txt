@@ -1,0 +1,25 @@
+from pymongo import MongoClient
+from datetime import datetime
+
+client = MongoClient("mongodb+srv://martinezjrjoey9:o4A2iErCWaKmserQ@cluster0.azaoo6z.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+
+db = client.test_coords  # Create database named 'test_coords'
+
+coords_collection = db.coords_data
+
+coords_collection.create_index("lat")
+coords_collection.create_index("lng")
+
+def insert_sample_data():
+    sample_data = {
+        "notes": "Sample coordinate",
+        "lat": 14.5515,  # Latitude in DD format
+        "lng": 121.0450,  # Longitude in DD format
+        "created_at": datetime.utcnow(),
+        "updated_at": datetime.utcnow()
+    }
+    coords_collection.insert_one(sample_data)
+    print("Sample data inserted successfully!")
+
+if __name__ == "__main__":
+    insert_sample_data()
