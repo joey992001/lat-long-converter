@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
+import './App.css'; // Import CSS file
 
 function App() {
   const [latitude, setLatitude] = useState('');
   const [longitude, setLongitude] = useState('');
   const [convertedCoords, setConvertedCoords] = useState('');
+
+  const defaultLat = 14.5515; // West Rembo, Makati City
+  const defaultLng = 121.0450;
 
   // Function to convert Decimal Degrees (DD) to DMS
   const convertToDMS = (dd, isLatitude) => {
@@ -38,22 +42,39 @@ function App() {
 
   return (
     <div className="container">
-      <h2>Latitude and Longitude Converter</h2>
-      <input
-        type="number"
-        placeholder="Enter Latitude (DD)"
-        value={latitude}
-        onChange={(e) => setLatitude(e.target.value)}
-      />
-      <input
-        type="number"
-        placeholder="Enter Longitude (DD)"
-        value={longitude}
-        onChange={(e) => setLongitude(e.target.value)}
-      />
-      <button onClick={handleConvert}>Convert Coords</button>
-      <p>{convertedCoords}</p>
-      <button onClick={saveToDatabase}>Save to Database</button>
+      <h1>Latitude & Longitude Converter</h1>
+      
+      <div className="card">
+        <input
+          type="number"
+          placeholder="Enter Latitude (DD)"
+          value={latitude}
+          onChange={(e) => setLatitude(e.target.value)}
+        />
+        <input
+          type="number"
+          placeholder="Enter Longitude (DD)"
+          value={longitude}
+          onChange={(e) => setLongitude(e.target.value)}
+        />
+        <button onClick={handleConvert} className="convert-btn">Convert Coords</button>
+        <p className="converted-text">{convertedCoords}</p>
+        <button onClick={saveToDatabase} className="save-btn">Save to Database</button>
+      </div>
+
+      {/* Static Google Map */}
+      <div className="map-container">
+        <h3>Location Map</h3>
+        <iframe
+          title="Google Map of West Rembo"
+          width="100%"
+          height="400"
+          style={{ border: 0 }}
+          loading="lazy"
+          allowFullScreen
+          src={`https://maps.google.com/maps?q=${defaultLat},${defaultLng}&t=&z=15&ie=UTF8&iwloc=&output=embed`}
+        ></iframe>
+      </div>
     </div>
   );
 }
